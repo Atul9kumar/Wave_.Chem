@@ -1,0 +1,177 @@
+/* Background gradient */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Center container */
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  width: 350px;
+}
+
+/* Headline */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  color: #fff;
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+}
+
+/* Input fields */
+input[type="email"], 
+input[type="password"], 
+input[type="file"] {
+  display: block;
+  width: 90%;
+  margin: 10px auto;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Hidden sections */
+.hidden {
+  display: none;
+}
+/* 🔘 Base Button Style */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 🔵 Login Button (Blue gradient) */
+button.login {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+button.login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(91, 134, 229, 0.5);
+}
+
+/* 🟣 Signup Button (Pink/Purple gradient) */
+button.signup {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+}
+button.signup:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(221, 36, 118, 0.5);
+}
+
+/* 🟢 Upload Button (Green gradient) */
+button.upload {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+button.upload:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(56, 239, 125, 0.5);
+}
+
+/* 🚪 Logout Button (Orange gradient) */
+button.logout {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #333;
+}
+button.logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(247, 151, 30, 0.5);
+}
+.profile {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  margin: 0;
+  padding: 0;
+}
+
+.login-container, .admin-container {
+  width: 350px;
+  margin: 100px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.login-container input, 
+.admin-container input, 
+select {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+button {
+  width: 95%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
+  color: white;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #ee0979, #ff6a00);
+}
+
+.admin-btn {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+
+.admin-btn:hover {
+  background: linear-gradient(45deg, #00f2fe, #4facfe);
+}

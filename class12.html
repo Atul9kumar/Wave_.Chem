@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 12 | Study Materials</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1d4350, #a43931);
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+    h1 { text-align: center; margin-bottom: 20px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+    .card:hover { transform: scale(1.05); }
+    .card h3 { margin-bottom: 10px; }
+    .card button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to right, #ff512f, #dd2476);
+      color: white;
+      cursor: pointer;
+    }
+    .card button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <h1>📘 Class 12 Study Materials</h1>
+  <div class="grid" id="fileCards"></div>
+
+  <script>
+    function loadClassFiles() {
+      let files = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
+      const container = document.getElementById("fileCards");
+      container.innerHTML = "";
+
+      // Sirf Class 11 ki files
+      let classFiles = files.filter(f => f.class === "Class 12");
+
+      if (classFiles.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>No files uploaded yet.</p>";
+        return;
+      }
+
+      classFiles.forEach((file, index) => {
+        let card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${file.name}</h3>
+          <p>Subject Material</p>
+          <button onclick="downloadFile('${file.name}', '${file.class}')">Download</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function downloadFile(fileName, className) {
+      let files = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
+      let file = files.find(f => f.name === fileName && f.class === className);
+
+      if (!file) {
+        alert("❌ File not found!");
+        return;
+      }
+
+      // Download actual Base64 file
+      const link = document.createElement("a");
+      link.href = file.content;   // yeh Base64 data hai jo admin upload ke time save hua
+      link.download = file.name;  // original file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    loadClassFiles();
+  </script>
+</body>
+</html>

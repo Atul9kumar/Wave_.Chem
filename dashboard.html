@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#667eea,#764ba2); margin:0; padding:0; color:white; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:15px 30px; background:rgba(0,0,0,0.2); backdrop-filter:blur(5px); }
+  .logo { font-size:24px; font-weight:bold; }
+  .profile { display:flex; align-items:center; gap:10px; }
+  .profile img { width:45px; height:45px; border-radius:50%; border:2px solid white; object-fit:cover; }
+  .logout-btn { background:red; border:none; padding:6px 12px; border-radius:5px; color:white; cursor:pointer; font-size:14px; transition:0.3s; }
+  .logout-btn:hover { background:darkred; transform:scale(1.05); }
+  main { text-align:center; margin-top:40px; padding-bottom:50px; }
+  h1 { margin-bottom:20px; font-size:28px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin:40px auto; max-width:900px; padding:20px; }
+  .card { border-radius:12px; padding:25px 20px; color:white; box-shadow:0 5px 20px rgba(0,0,0,0.3); transition:transform 0.3s ease, box-shadow 0.3s ease; cursor:pointer; }
+  .card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.5); }
+  .class11 { background:linear-gradient(135deg,#ff9a9e,#fad0c4); color:black; }
+  .class12 { background:linear-gradient(135deg,#a1c4fd,#c2e9fb); color:black; }
+  .jee { background:linear-gradient(135deg,#fbc2eb,#a6c1ee); color:black; }
+  .neet { background:linear-gradient(135deg,#84fab0,#8fd3f4); color:black; }
+  .card h2 { margin-bottom:10px; font-size:20px; }
+  .card p { font-size:14px; }
+
+  .quote-box { max-width:800px; margin:50px auto 30px; padding:25px 30px; background:rgba(255,255,255,0.2); border-radius:15px; font-style:italic; font-size:16px; line-height:1.8; color:#fff; text-align:justify; box-shadow:0 8px 20px rgba(0,0,0,0.35); backdrop-filter:blur(8px); position:relative; }
+  .quote-box::before { content:"“"; font-size:50px; position:absolute; top:-20px; left:20px; color:#fff; opacity:0.7; }
+  .quote-box::after { content:"”"; font-size:50px; position:absolute; bottom:-30px; right:20px; color:#fff; opacity:0.7; }
+
+  .doubt-box { max-width:800px; margin:50px auto; padding:20px 25px; background:rgba(255,255,255,0.15); border-left:6px solid #fff; border-radius:12px; color:#fff; box-shadow:0 5px 15px rgba(0,0,0,0.3); backdrop-filter:blur(5px); text-align:left; }
+  .doubt-box h2 { text-align:center; margin-bottom:15px; }
+  .doubt-box input[type=text] { width:calc(100% - 110px); padding:10px; margin-right:10px; border-radius:5px; border:none; }
+  .doubt-box button { padding:10px 15px; border-radius:5px; border:none; background:linear-gradient(to right,#ff512f,#dd2476); color:white; font-weight:bold; cursor:pointer; transition:0.3s; }
+  .doubt-box button:hover { opacity:0.9; transform:scale(1.05); }
+  .doubt-box ul { list-style:none; padding:0; margin-top:15px; max-height:300px; overflow-y:auto; }
+  .doubt-box li { background:rgba(255,255,255,0.2); padding:10px; border-radius:6px; margin-bottom:8px; word-wrap:break-word; display:flex; flex-direction:column; }
+  .doubt-box li button { background:transparent; border:none; color:red; cursor:pointer; font-size:16px; margin-left:5px; }
+  .comment-input { margin-top:5px; display:flex; gap:5px; }
+  .comment-input input { flex:1; padding:5px; border-radius:5px; border:none; }
+  .comment-input button { padding:5px 8px; border-radius:5px; border:none; background:#00b894; cursor:pointer; color:white; }
+  .comment-input button:hover { opacity:0.9; transform:scale(1.05); }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">📘 WaveChem Dashboard</div>
+  <div class="profile">
+    <span id="profileName">Student</span>
+    <img id="profileImg" src="" alt="Profile">
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+  </div>
+</header>
+
+<main>
+  <h1>Welcome, <span id="studentName">Student</span> 👋</h1>
+  <p>Select your class to access study materials:</p>
+  <p>By Sachin Sir: Expert In Chemistry</p>
+
+  <div class="cards">
+    <div class="card class11" onclick="openPage('class11.html')"><h2>Class 11</h2><p>Explore Chemistry study materials for Class 11.</p></div>
+    <div class="card class12" onclick="openPage('class12.html')"><h2>Class 12</h2><p>Explore Chemistry study materials for Class 12.</p></div>
+    <div class="card jee" onclick="openPage('jee.html')"><h2>JEE</h2><p>Access JEE Chemistry practice and notes.</p></div>
+    <div class="card neet" onclick="openPage('neet.html')"><h2>NEET</h2><p>Access NEET Chemistry preparation resources.</p></div>
+  </div>
+
+  <!-- Doubt Box -->
+  <div class="doubt-box">
+    <h2>💬 Doubt Box</h2>
+    <p1>Ask Your Doubts Here:<p1>
+    <input type="text" id="doubtInput" placeholder="Type your doubt here..." />
+    <button id="postBtn">Post Doubt</button>
+    <ul id="doubtList"></ul>
+  </div>
+
+  <!-- Designer Quote Box -->
+  <div class="quote-box">
+    Chemistry is the language of matter, the poetry of molecules, and the story of how the universe connects. It teaches us that even the smallest particles can create powerful reactions, that balance and bonding are the foundations of everything, and that curiosity, observation, and experimentation can transform the invisible into the extraordinary. To study chemistry is to explore the unseen world, to understand the rules that govern life itself, and to realize that knowledge is the catalyst for discovery.
+  </div>
+</main>
+
+<script>
+const username = localStorage.getItem("loggedInUser") || "Student";
+const gender = localStorage.getItem("userGender") || "other";
+document.getElementById("profileName").textContent=username;
+document.getElementById("studentName").textContent=username;
+let imgSrc="https://cdn-icons-png.flaticon.com/512/219/219983.png";
+if(gender==="male") imgSrc="https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+else if(gender==="female") imgSrc="https://cdn-icons-png.flaticon.com/512/194/194938.png";
+document.getElementById("profileImg").src=imgSrc;
+
+function logoutUser(){ localStorage.removeItem("loggedInUser"); localStorage.removeItem("userGender"); window.location.href="index.html"; }
+function openPage(page){ window.location.href=page; }
+
+// Doubt Box with comments & author-specific delete
+let doubtList=JSON.parse(localStorage.getItem("doubts")||"[]");
+const doubtUL=document.getElementById("doubtList");
+const postBtn=document.getElementById("postBtn");
+const doubtInput=document.getElementById("doubtInput");
+
+function renderDoubts(){
+  doubtUL.innerHTML="";
+  doubtList.forEach((doubt,index)=>{
+    const li=document.createElement("li");
+    const textDiv=document.createElement("div");
+    textDiv.textContent=`${doubt.user}: ${doubt.text}`;
+    if(doubt.user===username){
+      const delBtn=document.createElement("button");
+      delBtn.textContent="❌"; delBtn.onclick=()=>deleteDoubt(index); textDiv.appendChild(delBtn);
+    }
+    li.appendChild(textDiv);
+
+    const commentUL=document.createElement("ul");
+    if(doubt.comments){
+      doubt.comments.forEach((c,cIndex)=>{
+        const cLi=document.createElement("li"); cLi.textContent=`${c.user}: ${c.text}`;
+        if(c.user===username){
+          const cDelBtn=document.createElement("button");
+          cDelBtn.textContent="❌"; cDelBtn.onclick=()=>deleteComment(index,cIndex);
+          cLi.appendChild(cDelBtn);
+        }
+        commentUL.appendChild(cLi);
+      });
+    }
+    li.appendChild(commentUL);
+
+    const commentDiv=document.createElement("div"); commentDiv.className="comment-input";
+    const commentInput=document.createElement("input"); commentInput.placeholder="Reply...";
+    const commentBtn=document.createElement("button"); commentBtn.textContent="Reply";
+    commentBtn.onclick=()=>{
+      const val=commentInput.value.trim(); if(!val) return;
+      if(!doubtList[index].comments) doubtList[index].comments=[];
+      doubtList[index].comments.push({text:val,user:username});
+      localStorage.setItem("doubts",JSON.stringify(doubtList));
+      renderDoubts();
+    };
+    commentDiv.appendChild(commentInput); commentDiv.appendChild(commentBtn);
+    li.appendChild(commentDiv);
+
+    doubtUL.appendChild(li);
+  });
+}
+
+function postDoubt(){ const val=doubtInput.value.trim(); if(!val) return; doubtList.push({text:val,user:username,comments:[]}); localStorage.setItem("doubts",JSON.stringify(doubtList)); renderDoubts(); doubtInput.value=""; }
+function deleteDoubt(index){ if(doubtList[index].user===username){ doubtList.splice(index,1); localStorage.setItem("doubts",JSON.stringify(doubtList)); renderDoubts(); } }
+function deleteComment(doubtIndex,commentIndex){ if(doubtList[doubtIndex].comments[commentIndex].user===username){ doubtList[doubtIndex].comments.splice(commentIndex,1); localStorage.setItem("doubts",JSON.stringify(doubtList)); renderDoubts(); } }
+
+postBtn.addEventListener("click",postDoubt);
+renderDoubts();
+</script>
+</body>
+<h1>THANKS FOR VISITING🙏🏻🙏🏻<h1>
+</html>

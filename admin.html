@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Study Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #141E30, #243B55);
+      margin: 0;
+      padding: 0;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 25px;
+      border-radius: 15px;
+      width: 380px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    h2 { margin-bottom: 15px; }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      outline: none;
+    }
+    input, select { background: rgba(255, 255, 255, 0.2); color: white; }
+    option { color: black; }
+    button {
+      background: linear-gradient(to right, #ff512f, #dd2476);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    button:hover { transform: scale(1.05); opacity: 0.9; }
+    .hidden { display: none; }
+    ul { list-style: none; padding: 0; margin-top: 15px; }
+    li {
+      background: rgba(255,255,255,0.15);
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    .delete-btn {
+      background: crimson;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.3s;
+    }
+    .delete-btn:hover { background: darkred; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Card -->
+  <div class="card" id="loginCard">
+    <h2>🔐 Admin Login</h2>
+    <input type="text" id="adminUser" placeholder="Username">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button onclick="adminLogin()">Login</button>
+    <p style="font-size: 12px; color: lightgray;">Default → user: <b>admin</b>, pass: <b>1234</b></p>
+  </div>
+
+  <!-- Upload Card -->
+  <div class="card hidden" id="uploadCard">
+    <h2>📂 Upload Study Materials</h2>
+    <select id="classSelect">
+      <option value="">Select Class</option>
+      <option value="Class 11">Class 11</option>
+      <option value="Class 12">Class 12</option>
+      <option value="JEE">JEE</option>
+      <option value="NEET">NEET</option>
+    </select>
+    <input type="file" id="fileInput">
+    <!-- ✅ onclick fixed -->
+    <button onclick="uploadFile()">Upload File</button>
+
+    <h3 style="margin-top:20px;">📑 Uploaded Files</h3>
+    <ul id="fileList"></ul>
+  </div>
+
+  <script>
+    // 🔐 Admin login
+    function adminLogin() {
+      const user = document.getElementById("adminUser").value.trim();
+      const pass = document.getElementById("adminPass").value.trim();
+
+      if (user === "admin" && pass === "1234") {
+        document.getElementById("loginCard").classList.add("hidden");
+        document.getElementById("uploadCard").classList.remove("hidden");
+        loadFiles();
+      } else {
+        alert("❌ Invalid Admin Credentials!");
+      }
+    }
+
+    // 📂 Upload file with Base64 content
+    function uploadFile() {
+      const classSelect = document.getElementById("classSelect").value;
+      const fileInput = document.getElementById("fileInput").files[0];
+
+      if (!classSelect || !fileInput) {
+        alert("⚠️ Please select class and file!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        let files = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
+        let fileData = {
+          id: Date.now(),
+          name: fileInput.name,
+          class: classSelect,
+          content: e.target.result   // ✅ Base64 data added
+        };
+
+        files.push(fileData);
+        localStorage.setItem("uploadedFiles", JSON.stringify(files));
+
+        document.getElementById("fileInput").value = "";
+        loadFiles();
+      };
+
+      // Convert file to Base64
+      reader.readAsDataURL(fileInput);
+    }
+
+    // 📑 Load files
+    function loadFiles() {
+      let files = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
+      const list = document.getElementById("fileList");
+      list.innerHTML = "";
+
+      if (files.length === 0) {
+        list.innerHTML = "<p style='font-size:13px; color:lightgray;'>No files uploaded yet.</p>";
+        return;
+      }
+
+      files.forEach(file => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${file.name} <small style="opacity:0.7;">(${file.class})</small></span>
+          <button class="delete-btn" onclick="deleteFile(${file.id})">Delete</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    // ❌ Delete file
+    function deleteFile(id) {
+      let files = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
+      files = files.filter(f => f.id !== id);
+      localStorage.setItem("uploadedFiles", JSON.stringify(files));
+      loadFiles();
+    }
+  </script>
+
+</body>
+</html>
