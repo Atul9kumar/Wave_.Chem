@@ -176,11 +176,12 @@ button:hover {
   background: linear-gradient(45deg, #00f2fe, #4facfe);
 }
 h {
-    font-family: 'Arial', 'Verdana', sans-serif; /* Font */
-    color: #2E8B57; /* Text color */
-    text-align: center; /* Center align */
-    margin: 20px 0; /* Har heading ke beech spacing */
-    font-size: 2.5em; /* Size badha diya (default se kaafi bada) */
+    font-family: 'Arial', 'Verdana', sans-serif; 
+    color: #2E8B57;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 4.5em;
 }
+
 
 
