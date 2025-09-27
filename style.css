@@ -175,3 +175,10 @@ button:hover {
 .admin-btn:hover {
   background: linear-gradient(45deg, #00f2fe, #4facfe);
 }
+h {
+    font-family: 'Arial', 'Verdana', sans-serif; /* Font change karne ke liye */
+    color: #2E8B57; /* Text color change karne ke liye, yahan green tone hai */
+    text-align: center; /* Center align kar diya */
+    margin: 20px 0; /* Thoda spacing har heading ke liye */
+}
+
